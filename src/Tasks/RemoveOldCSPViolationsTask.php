@@ -6,17 +6,19 @@ use DateInterval;
 use Signify\Jobs\RemoveOldCSPViolationsJob;
 use SilverStripe\Core\Config\Config;
 use SilverStripe\Dev\BuildTask;
+use SilverStripe\PolyExecution\PolyOutput;
 use Symbiote\QueuedJobs\Services\QueuedJobService;
+use Symfony\Component\Console\Input\InputInterface;
 
 class RemoveOldCSPViolationsTask extends BuildTask
 {
-    protected $title = 'Remove old CSP violation reports';
+    protected string $title = 'Remove old CSP violation reports';
 
     /**
      * {@inheritDoc}
      * @see \SilverStripe\Dev\BuildTask::run()
      */
-    public function run($request)
+    public function run(InputInterface $input, PolyOutput $output): int
     {
         $deletionJob = new RemoveOldCSPViolationsJob();
 
@@ -29,7 +31,7 @@ class RemoveOldCSPViolationsTask extends BuildTask
      * {@inheritDoc}
      * @see \SilverStripe\Dev\BuildTask::getDescription()
      */
-    public function getDescription()
+    public static function getDescription():string
     {
         // Map DateInterval fields to text names. Order is significant.
         static $parts = [
@@ -70,8 +72,13 @@ class RemoveOldCSPViolationsTask extends BuildTask
             $duration_string . ' will be removed.';
     }
 
-    public function isEnabled()
+    public function isEnabled():bool
     {
         return parent::isEnabled() && class_exists(QueuedJobService::class);
+    }
+
+    public function execute(InputInterface $input, PolyOutput $output): int
+    {
+        // TODO: Implement execute() method.
     }
 }
