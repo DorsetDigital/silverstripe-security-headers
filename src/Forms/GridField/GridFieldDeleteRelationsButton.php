@@ -10,7 +10,7 @@ use SilverStripe\Forms\GridField\GridField_FormAction;
 use SilverStripe\Control\HTTPRequest;
 use SilverStripe\Core\Extensible;
 use SilverStripe\Security\Security;
-use SilverStripe\View\ArrayData;
+use SilverStripe\Model\ArrayData;
 use SilverStripe\Forms\FormAction;
 use SilverStripe\View\SSViewer;
 use SilverStripe\Forms\FieldList;
