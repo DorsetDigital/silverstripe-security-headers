@@ -249,8 +249,9 @@ class GridFieldDeleteRelationsButton implements GridField_HTMLProvider, GridFiel
         }
         $form = $this->DeletionForm($gridField);
         $form->loadDataFrom($data);
-        $validationResult = $form->validationResult();
-        if (!$validationResult->isValid()) {
+        $validator = $form->getValidator();
+        $validationResult = $validator ? $validator->validate() : null;
+        if ($validationResult && !$validationResult->isValid()) {
             $form->setSessionValidationResult($validationResult);
             $form->setSessionData($data);
             return $gridField->redirectBack();
